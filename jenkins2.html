@@ -1,0 +1,118 @@
+pipeline {
+    agent any
+    
+    environment {
+        DIRECTORY_PATH = "path/to/code/directory"
+        TESTING_ENVIRONMENT = "testing-environment-name"
+        PRODUCTION_ENVIRONMENT = "Mounika-production"
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                echo "Building"
+                
+            }
+            post{
+                success{
+                    mail to: "angadipetamounika@gmail.com",
+                    subject: "Build status Email",
+                    body: "Build was succesfull!"
+                }
+            }
+                
+            }
+        
+        
+        stage('Tests') {
+            steps {
+                echo "Running Unit and Integration Tests"
+                
+            }
+            post{
+                success{
+                    mail to: "angadipetamounika@gmail.com",
+                    subject: "Test status Email",
+                    body: "Test was succesfull!"
+                }
+            }
+        }
+    
+        
+        stage('Code Analysis') {
+            steps {
+                echo "Checking the quality of the code"
+            }
+            post{
+                success{
+                    mail to: "angadipetamounika@gmail.com",
+                    subject: "Code Analysis status Email",
+                    body: "Code Analysis was succesfull!"
+                }
+            }
+        }
+        
+        stage('Security Scan') {
+            steps {
+                echo "Security Scan"
+            }
+            post{
+                success{
+                    mail to: "angadipetamounika@gmail.com",
+                    subject: "Security Scan Analysis status Email",
+                    body: "Security Scan Analysis was succesfull!"
+                }
+            }
+        }
+        
+        stage('Deploy to Staging') {
+            steps {
+                
+                    echo "Deploy to Staging"
+                }
+                post{
+                    success{
+                        mail to: "angadipetamounika@gmail.com",
+                        subject: "Deploy to Staging status Email",
+                        body: "Deploy to Staging was succesfull!"
+                    }
+                }
+            }
+        
+            stage('Integration Tests on Staging') {
+            steps {
+                
+                    echo "Integration Tests on Staging"
+                }
+                post{
+                    success{
+                        mail to: "angadipetamounika@gmail.com",
+                        subject: "Integration Tests on Staging status Email",
+                        body: "Integration Tests on Staging was succesfull!"
+                    }
+                }
+            }
+        
+        
+        
+            stage('Deploy to Production') {
+            
+                steps {
+                    echo "Deploying the application to production environment: ${env.PRODUCTION_ENVIRONMENT}"
+                }
+                post{
+                    success{
+                        mail to: "angadipetamounika@gmail.com",
+                        subject: "Deploy to Production status Email",
+                        body: "Deploy to Production was succesfull!"
+                    }
+                }
+            }
+        }
+    
+    post {
+        always {
+            echo "Pipeline execution completed"
+        }
+    }
+}
